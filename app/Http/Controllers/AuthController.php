@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repository\AuthGetCodeRepository;
+use App\Repository\AuthRepository;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -15,7 +16,7 @@ class AuthController extends Controller
         $password = app('hash')->make($authCode);
         $mobileNumber = $request->input('mobile_number');
 
-        AuthGetCodeRepository::setPassword($mobileNumber, $password);
+        AuthRepository::setPassword($mobileNumber, $password);
 
         return json_encode([
             'message' => 'The auth code is :',
@@ -23,6 +24,24 @@ class AuthController extends Controller
                 'auth_code' => $authCode,
             ]
         ]);
+    }
+
+    public function login(Request $request)
+    {
+
+        $attempt = [
+            'password' => $request->input('auth_code'),
+            'mobile_number' => $request->input('mobile_number'),
+        ];
+
+        return response()->json([
+            'message' => 'Login was successful',
+            'data' => [
+                'token_type' => 'bearer',
+                'access_token' => Auth::attempt($attempt),
+                'expires_in' => Auth::factory()->getTTL()
+            ]
+        ], 200);
     }
 
     private function generateAuthCode()

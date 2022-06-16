@@ -25,10 +25,17 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             'uses' => 'AuthController@getAuthCode',
             'middleware' => [
                 'App\Http\Middleware\AuthGetCodeValidationMiddleware',
-                'App\Http\Middleware\AuthGetCodeMobileNumberMiddleware',
+                'App\Http\Middleware\AuthMobileNumberMiddleware',
+            ],
+        ]);
+
+        $router->post('/login', [
+            'uses' => 'AuthController@login',
+            'middleware' => [
+                'App\Http\Middleware\AuthLoginValidationMiddleware',
+                'App\Http\Middleware\AuthLoginCheckPasswordMiddleware',
             ],
         ]);
     });
-
 });
 

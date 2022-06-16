@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Models\User;
 
-class AuthGetCodeRepository
+class AuthRepository
 {
 
     public static function isMobileNumberExist($mobileNumber)
@@ -30,5 +30,18 @@ class AuthGetCodeRepository
             ]);
     }
 
+    public static function getPassword($mobileNumber)
+    {
 
+        $query = User::query()->select('password')
+            ->where('mobile_number', $mobileNumber)
+            ->first();
+
+        if (!empty($query->password)) {
+
+            return $query->password;
+        }
+
+        return null;
+    }
 }

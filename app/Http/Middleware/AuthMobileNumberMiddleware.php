@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Repository\AuthGetCodeRepository;
+use App\Repository\AuthRepository;
 
-class AuthGetCodeMobileNumberMiddleware
+class AuthMobileNumberMiddleware
 {
 
     /**
@@ -18,9 +18,9 @@ class AuthGetCodeMobileNumberMiddleware
     public function handle($request, Closure $next)
     {
 
-        if (!(AuthGetCodeRepository::isMobileNumberExist($request->input('mobile_number')))) {
+        if (!(AuthRepository::isMobileNumberExist($request->input('mobile_number')))) {
 
-            AuthGetCodeRepository::createUser($request->input('mobile_number'));
+            AuthRepository::createUser($request->input('mobile_number'));
         }
 
         return $next($request);
