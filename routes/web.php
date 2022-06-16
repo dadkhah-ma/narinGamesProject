@@ -16,3 +16,19 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'api'], function () use ($router) {
+
+    $router->group(['prefix' => 'auth'], function () use ($router) {
+
+        $router->post('/get-code', [
+            'uses' => 'AuthController@getAuthCode',
+            'middleware' => [
+                'App\Http\Middleware\AuthGetCodeValidationMiddleware',
+                'App\Http\Middleware\AuthGetCodeMobileNumberMiddleware',
+            ],
+        ]);
+    });
+
+});
+
