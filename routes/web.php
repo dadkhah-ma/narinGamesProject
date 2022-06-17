@@ -47,6 +47,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
                 'App\Http\Middleware\GameViewCheckIdMiddleware',
             ],
         ]);
+
+        $router->post('/create', [
+            'uses' => 'GameController@create',
+            'middleware' => [
+                'App\Http\Middleware\GameCreateValidationMiddleware',
+                'App\Http\Middleware\GameViewCheckIdMiddleware',
+            ],
+        ]);
     });
 });
 

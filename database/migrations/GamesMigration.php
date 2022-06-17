@@ -16,7 +16,7 @@ class GamesMigration extends Migration
 
             $table->id();
             $table->string('title', 255);
-            $table->string('description', 255);
+            $table->string('description', 255)->nullable();
 
             $table->bigInteger('created_by');
             $table->timestamp('created_at')

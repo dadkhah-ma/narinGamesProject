@@ -15,7 +15,7 @@ class Game extends Model
     protected $table = "games";
 
     protected $fillable = [
-        'titile', 'description', 'created_by', 'updated_by', 'deleted_by'
+        'title', 'description', 'created_by', 'updated_by', 'deleted_by'
     ];
 
     protected $hidden = [

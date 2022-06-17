@@ -16,9 +16,26 @@ class GameController extends Controller
         return json_encode([
             'message' => 'The game list is :',
             'data' => [
-                'games' => GameRepository::getGames($this->generateViewQueryConditions($request)),
+                'games' => GameRepository::get($this->generateViewQueryConditions($request)),
             ]
         ]);
+    }
+
+    public function create(Request $request)
+    {
+
+        $game = GameRepository::create(
+            Auth::id(),
+            $request->input('title'),
+            $request->has('description') ? $request->input('description') : null,
+        );
+
+        return response()->json([
+            'message' => 'The game created successfully :',
+            'data' => [
+                'game' => $game,
+            ]
+        ], 201);
     }
 
 

@@ -16,22 +16,33 @@ class GameRepository
             ->exists();
     }
 
-    public static function getGames($queryConditions = [])
+    public static function get($queryConditions = [])
     {
 
         return Game::query()
             ->where($queryConditions)
-            ->with(self::gameWith())
+            ->with(self::with())
             ->paginate();
     }
 
-    public static function gameWith()
+    public static function with()
     {
 
         return [
             'createdBy:id,mobile_number',
             'updatedBy:id,mobile_number',
         ];
+    }
+
+    public static function create($userId, $title, $description = null)
+    {
+
+        return Game::query()->create([
+            'title' => $title,
+            'description' => $description,
+            'created_by' => $userId,
+            'updated_by' => $userId,
+        ]);
     }
 
 }
