@@ -53,4 +53,12 @@ class GameRepository
             ->update($update);
     }
 
+    public static function delete($id)
+    {
+
+        return Game::query()
+            ->where('id', $id)
+            ->delete();
+    }
+
 }

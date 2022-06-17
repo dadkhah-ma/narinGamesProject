@@ -49,7 +49,24 @@ class GameController extends Controller
         return response()->json([
             'message' => 'The game updated successfully :',
             'data' => []
-        ], 204);
+        ], 200);
+    }
+
+    public function delete($id)
+    {
+
+        GameRepository::update(
+            $id,
+            ['deleted_by' => Auth::id()]
+        );
+
+        GameRepository::delete($id);
+
+        return response()->json([
+            'message' => 'The game deleted successfully :',
+            'data' => []
+        ], 200);
+
     }
 
     private function generateViewQueryConditions(Request $request)
