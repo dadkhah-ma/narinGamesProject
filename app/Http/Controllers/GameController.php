@@ -27,7 +27,7 @@ class GameController extends Controller
         $game = GameRepository::create(
             Auth::id(),
             $request->input('title'),
-            $request->has('description') ? $request->input('description') : null,
+            $request->input('description'),
         );
 
         return response()->json([
@@ -38,6 +38,19 @@ class GameController extends Controller
         ], 201);
     }
 
+    public function update(Request $request)
+    {
+
+        $game = GameRepository::update(
+            $request->input('id'),
+            $this->generateUpdateData($request)
+        );
+
+        return response()->json([
+            'message' => 'The game updated successfully :',
+            'data' => []
+        ], 204);
+    }
 
     private function generateViewQueryConditions(Request $request)
     {
@@ -58,5 +71,22 @@ class GameController extends Controller
         }
 
         return $queryConditions;
+    }
+
+    private function generateUpdateData(Request $request)
+    {
+
+        $result['updated_by'] = Auth::id();
+        if ($request->has('title')) {
+
+            $result['title'] = $request->input('title');
+        }
+
+        if ($request->has('description')) {
+
+            $result['description'] = $request->input('description');
+        }
+
+        return $result;
     }
 }

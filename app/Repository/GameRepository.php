@@ -45,4 +45,12 @@ class GameRepository
         ]);
     }
 
+    public static function update($id, $update)
+    {
+
+        return Game::query()
+            ->where('id', $id)
+            ->update($update);
+    }
+
 }

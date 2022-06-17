@@ -55,6 +55,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
                 'App\Http\Middleware\GameViewCheckIdMiddleware',
             ],
         ]);
+
+        $router->put('/update/{id}', [
+            'uses' => 'GameController@update',
+            'middleware' => [
+                'App\Http\Middleware\GameUpdateValidationMiddleware',
+                'App\Http\Middleware\GameUpdateCheckIdMiddleware',
+            ],
+        ]);
     });
 });
 
