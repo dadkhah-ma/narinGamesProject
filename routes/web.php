@@ -68,7 +68,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             'uses' => 'GameController@delete',
             'middleware' => [
                 'App\Http\Middleware\GameDeleteValidationMiddleware',
-//                'App\Http\Middleware\GameDeleteLogMiddleware',
             ],
         ]);
     });
