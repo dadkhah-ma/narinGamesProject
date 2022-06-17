@@ -37,5 +37,16 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             ],
         ]);
     });
+
+    $router->group(['prefix' => 'games', 'middleware' => 'auth'], function () use ($router) {
+
+        $router->get('/', [
+            'uses' => 'GameController@view',
+            'middleware' => [
+                'App\Http\Middleware\GameViewValidationMiddleware',
+                'App\Http\Middleware\GameViewCheckIdMiddleware',
+            ],
+        ]);
+    });
 });
 
